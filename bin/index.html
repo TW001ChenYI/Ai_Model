@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <h1 >
+        <font color="blue">AI 也可以很金庸：如何用 TensorFlow 2.4 及 Python Api 寫金庸風格小說</font>
+    </h1>
+
+<table align="center" valign="center">
+<tr><td> 
+<section style="margin-bottom: 3rem" align="center" valign="center">
+<span class="input-title"> <b>生成字數：</b></span>
+            <textarea id="num_generate" rows="2" cols=20% placeholder="請輸入正整數" required="True" style="min-height: 3em" value=""></textarea>
+
+</section>
+</td>
+<td rowspan="3"  >
+            <span class="input-title" ><b>生成結果：</b></span>
+            <textarea id="generated-text" align="center" valign="center" readonly="true"  rows="20" cols="60" value=""></textarea>
+</td></tr>
+<tr><td>
+<section style="margin-bottom: 3rem" align="center" valign="center">
+
+ <span class="input-title"><b>生成溫度：</b></span>  
+            <textarea id="temperature" rows="2" placeholder="請輸入0-1的之間" style="min-height: 3em" value=""></textarea>
+
+	    
+
+            
+</section>
+</td></tr>
+<tr><td>
+<section style="margin-bottom: 3rem" align="center" valign="center">
+            <span class="input-title"><b>起始句子：</b></span>           
+            <textarea id="string_string" rows="2" style="min-height: 3em" value="">孫楚恩打敗盧瑞山，</textarea
+</section>
+</td></tr>
+<tr><td colspan="2">   <div>
+        <button id="initialize-seed" onclick="clearInputFunction()">重置輸入</button>
+    <button id="generate-text" onclick="predictFunction()">生成文章</button>
+    </div><td></tr>
+</table>
+ 
+<h3>
+ 	<marquee><p>修改人:AI二甲 D10816104 陳羿翰  指導老師:盧瑞山老師<p> </marquee>
+</h3>
+    <script>
+        function clearInputFunction() {
+            document.getElementById("string_string").innerHTML = "";
+	    document.getElementById("num_generate").innerHTML = "";
+	    document.getElementById("temperature").innerHTML = "";	
+            document.getElementById("string_string").value = "孫楚恩打敗盧瑞山，";
+            document.getElementById("generated-text").innerHTML ='';
+        }
+    </script>
+
+    <script>
+        function predictFunction() {
+            var string_string = document.getElementById("string_string").value;
+	    var num_generate = document.getElementById("num_generate").value;
+            var temperature = document.getElementById("temperature").value;
+	    document.getElementById("generated-text").innerHTML ='';
+            fetch('http://127.0.0.1:5000/text_gen?start_string='+string_string+'&num_generate='+num_generate+'&temperature='+temperature)
+            .then(res => {
+                    return res.text();
+            }).then(result => {
+                console.log(result);
+                document.getElementById("generated-text").innerHTML = result;
+            });
+        }
+    </script>
+</body>
+
+</html>
